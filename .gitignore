@@ -30,7 +30,7 @@ Thumbs.db
 *~
 
 # File Recordings
-.recording.jsonl.gz
+*.recording.jsonl.gz
 
 # Pytest Results
 .html
