@@ -28,3 +28,9 @@ Thumbs.db
 *.tmp
 *.swp
 *~
+
+# File Recordings
+.recording.jsonl.gz
+
+# Pytest Results
+.html
