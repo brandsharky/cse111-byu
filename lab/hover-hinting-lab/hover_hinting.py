@@ -5,6 +5,9 @@ def find_multiples(num, amount):
     """takes in a number and an amount and
     returns a formating string listing out that many multiples of that number"""
     """***YOUR CODE HERE***"""
+    baz()
+
+
 
 
 def repeating_print(strings, freqs):
@@ -13,8 +16,16 @@ def repeating_print(strings, freqs):
     """***YOUR CODE HERE***"""
 
 
+
+
+
+
 def str_editor(in_file, target, out_file):
     """takes in an input file name, a target string and an output file name;
     takes the contents from the input file, replaces the target string with specified replacement
     and writes out edited strings to the output file"""
     """***YOUR CODE HERE***"""
+
+
+
+print(find_multiples())

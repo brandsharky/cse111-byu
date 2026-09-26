@@ -33,10 +33,12 @@ def scramble_image(input_file, output_file):
     image = Image(input_file)
 
     for pixel in image:
-        tmp = pixel.green
-        pixel.red = pixel.green
-        pixel.green = pixel.blue
-        pixel.blue = tmp
+        # tmp = pixel.green
+        # pixel.red = pixel.green
+        # pixel.green = pixel.blue
+        # pixel.blue = tmp
+
+        pixel.red, pixel.green, pixel.blue = pixel.green, pixel.blue, pixel.red
 
     image.save(output_file)
 
@@ -49,10 +51,13 @@ def verify_scramble(input_file, scramble_file):
     scrambled = Image(scramble_file)
 
     for pixel in scrambled:
-        tmp = pixel.red
-        pixel.red = pixel.blue
-        pixel.green = tmp
-        pixel.blue = pixel.green
+        # tmp = pixel.red
+        # pixel.red = pixel.blue
+        # pixel.green = tmp
+        # pixel.blue = pixel.green
+
+        pixel.green, pixel.blue, pixel.red = pixel.red, pixel.green, pixel.blue
+
 
     compare_images(unmodified, scrambled)
 
