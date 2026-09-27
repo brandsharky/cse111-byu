@@ -14,120 +14,128 @@ def iron_puzzle(filename):
 
 
 # Q2
-# def west_puzzle(filename):
-#     image = Image(filename)
-#     for y in range(image.height):
-#         for x in range(image.width):
-#             pixel = image.get_pixel(x, y)
-#             pixel.red = 0
-#             pixel.green = 0
-#
-#             if pixel.blue < 16:
-#                 pixel.blue *= 16
-#             else:
-#                 pixel.blue = 0
-#
-#     return image
+def west_puzzle(filename):
+    image = Image(filename)
+    for y in range(image.height):
+        for x in range(image.width):
+            pixel = image.get_pixel(x, y)
+            pixel.red = 0
+            pixel.green = 0
+
+            if pixel.blue < 16:
+                pixel.blue *= 16
+            else:
+                pixel.blue = 0
+
+    return image
 
 
 # Q3
-# def darken(filename, percent):
-#     image = Image(filename)
-#     for pixel in image:
-#         pixel.red = pixel.red * (1.0 - percent)
-#         pixel.green = pixel.green * (1.0 - percent)
-#         pixel.blue = pixel.blue * (1.0 - percent)
-#
-#     return image
+def darken(filename, percent):
+    image = Image(filename)
+    for pixel in image:
+        pixel.red = pixel.red * (1.0 - percent)
+        pixel.green = pixel.green * (1.0 - percent)
+        pixel.blue = pixel.blue * (1.0 - percent)
+
+    return image
 
 
 # Q4
-# def grayscale(filename):
-#     image = Image(filename)
-#     for pixel in image:
-#         average = (pixel.red + pixel.green + pixel.blue) / 3.0
-#         pixel.red = average
-#         pixel.green = average
-#         pixel.blue = average
-#
-#     return image
+def grayscale(filename):
+    image = Image(filename)
+    for pixel in image:
+        average = (pixel.red + pixel.green + pixel.blue) / 3.0
+        pixel.red = average
+        pixel.green = average
+        pixel.blue = average
+
+    return image
 
 
 # Q5
-# def sepia(filename):
-#     image = Image(filename)
-#     for pixel in image:
-#         true_red = 0.393 * pixel.red + 0.769 * pixel.green + 0.189 * pixel.blue
-#         true_green = 0.349 * pixel.red + 0.686 * pixel.green + 0.168 * pixel.blue
-#         true_blue = 0.272 * pixel.red + 0.534 * pixel.green + 0.131 * pixel.blue
-#
-#         pixel.red = true_red
-#         pixel.green = true_green
-#         pixel.blue = true_blue
-#
-#         if pixel.red > 255:
-#             pixel.red = 255
-#         if pixel.green > 255:
-#             pixel.green = 255
-#         if pixel.blue > 255:
-#             pixel.blue = 255
-#
-#     return image
+def sepia(filename):
+    image = Image(filename)
+    for pixel in image:
+        true_red = 0.393 * pixel.red + 0.769 * pixel.green + 0.189 * pixel.blue
+        true_green = 0.349 * pixel.red + 0.686 * pixel.green + 0.168 * pixel.blue
+        true_blue = 0.272 * pixel.red + 0.534 * pixel.green + 0.131 * pixel.blue
+
+        pixel.red = true_red
+        pixel.green = true_green
+        pixel.blue = true_blue
+
+        if pixel.red > 255:
+            pixel.red = 255
+        if pixel.green > 255:
+            pixel.green = 255
+        if pixel.blue > 255:
+            pixel.blue = 255
+
+    return image
 
 
 # Q6
-# def create_left_border(filename, weight):
-#     image = Image(filename)
-#     larger_image = Image.blank(image.width + weight, image.height)
-#
-#     for y in range(larger_image.height):
-#         for x in range(larger_image.width):
-#             og_pixel = image.get_pixel(x-weight, y)
-#             new_pixel = larger_image.get_pixel(x, y)
-#             if x < weight:
-#                 new_pixel.red = 0
-#                 new_pixel.green = 0
-#                 new_pixel.blue = 255
-#             else:
-#                 new_pixel.red = og_pixel.red
-#                 new_pixel.green = og_pixel.green
-#                 new_pixel.blue = og_pixel.blue
-#
-#     return larger_image
+def create_left_border(filename, weight):
+    old_image = Image(filename)
+    new_image = Image.blank(old_image.width + weight, old_image.height)
+
+    # Step 1: color the entire new image blue
+    for y in range(new_image.height):
+        for x in range(new_image.width):
+            pixel = new_image.get_pixel(x, y)
+            pixel.red = 0
+            pixel.green = 0
+            pixel.blue = 255
+
+    # Step 2/3: copy the old image's pixels into the shifted position
+    for y in range(old_image.height):
+        for x in range(old_image.width):
+            original_pixel = old_image.get_pixel(x, y)
+            new_pixel = new_image.get_pixel(x + weight, y)
+            new_pixel.red = original_pixel.red
+            new_pixel.green = original_pixel.green
+            new_pixel.blue = original_pixel.blue
+
+    return new_image
 
 
 # Q7
-# def create_stripes(filename):
-#     original_image = Image(filename)
-#     new_image = Image.blank(original_image.width + 50, original_image.height + 25)
-#
-#     for y in range(new_image.height):
-#         for x in range(new_image.width):
-#             pixel = new_image.get_pixel(x, y)
-#             pixel.red = 255
-#
-#             if y % 2 == 1:
-#                 pixel.red = 0
-#                 pixel.green = 0
-#                 pixel.blue = 255
-#
-#             if x % 2 == 0:
-#                 pixel.red = 0
-#                 pixel.green = 255
-#                 pixel.blue = 0
-#
-#     return new_image
+def create_stripes(filename):
+    original_image = Image(filename)
+    new_image = Image.blank(original_image.width + 50, original_image.height + 25)
+
+    for y in range(new_image.height):
+        for x in range(new_image.width):
+            pixel = new_image.get_pixel(x, y)
+            if y % 2 == 0:
+                # even row -> green
+                pixel.red = 0
+                pixel.green = 255
+                pixel.blue = 0
+            elif x % 2 != 0:
+                # odd column -> blue
+                pixel.red = 0
+                pixel.green = 0
+                pixel.blue = 255
+            else:
+                # otherwise -> red
+                pixel.red = 255
+                pixel.green = 0
+                pixel.blue = 0
+
+    return new_image
 
 
 # Q8
-# def copper_puzzle(filename):
-#     image = Image(filename)
-#     for pixel in image:
-#         pixel.red = 0
-#         pixel.green *= 20.0
-#         pixel.blue *= 20.0
-#
-#     return image
+def copper_puzzle(filename):
+    image = Image(filename)
+    for pixel in image:
+        pixel.red = 0
+        pixel.green *= 20.0
+        pixel.blue *= 20.0
+
+    return image
 
 
 
@@ -135,8 +143,8 @@ def iron_puzzle(filename):
 
 
 # Q1
-solution_image = iron_puzzle("test_files/iron.png")
-solution_image.show()
+# solution_image = iron_puzzle("test_files/iron.png")
+# solution_image.show()
 
 # Q2
 # solution_image = west_puzzle("test_files/west.png")
