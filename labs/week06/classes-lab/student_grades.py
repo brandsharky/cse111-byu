@@ -20,19 +20,22 @@ class StudentGrades:
     def __init__(self):
         self.students = {}
 
-    def add_student(name):
+
+    def add_student(self, name):
         if name in name.students:
             print(f"{name} is already in the system.")
         else:
-            name.students[name] = []
+            self.students[name] = []
             print(f"Added student: {name}")
+
 
     def record_grade(self, name, grade):
         if name not in self.students:
             print(f"{name} is not in the system. Add them first.")
         else:
-            name.append(grade)
+            self.students[name].append(grade)
             print(f"Recorded grade {grade} for {name}")
+
 
     def get_average(self, name):
         if name not in self.students:
@@ -41,6 +44,5 @@ class StudentGrades:
             print(f"{name} has no grades recorded.")
         else:
             scores = self.students[name]
-            for score in scores:
-                avg = sum(score) / len(score)
-                print(f"{name}'s average grade is {avg:.2f}")
+            avg = sum(scores) / len(scores)
+            print(f"{name}'s average grade is {avg:.2f}")

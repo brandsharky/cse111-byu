@@ -45,6 +45,9 @@ class Library:
         >>> l.books[0].author
         'Charles Dickens'
         """
+        self.books = {}
+        for book in books:
+            self.books[book.id] = book
 
 
     def read_book(self, id):
@@ -60,7 +63,11 @@ class Library:
         'The Hobbit has been read 1 time(s)'
         >>> l.read_book(3) # No book with this id
         """
-        
+        if id in self.books:
+            book = self.books[id]
+            book.times_read += 1
+            return f"{book.title} has been read {book.times_read} time(s)"
+
 
     def read_author(self, author):
         """Takes in the name of an author, then increments
@@ -76,8 +83,16 @@ class Library:
         >>> l.read_author("J.R.R. Tolkien")
         'The Hobbit has been read 1 time(s)\\nThe Fellowship of the Ring has been read 1 time(s)\\n'
         """
-        
+        result = ""
+        for book in self.books.values():
+            if book.author == author:
+                result += self.read_book(book.id) + "\n"
+
+        return result
+
 
     def add_book(self, book):
         """Takes in a book object and adds it to the books
         dictionary if the book id is not already taken."""
+        if book not in self.books:
+            self.books[book.id] = book
